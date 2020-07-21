@@ -1,0 +1,21 @@
+kind: ExternalService
+name: telegram-tweemage
+spec:
+  image: tweemage:0.0.8
+  allow_http: false
+  port: 8080
+  env:
+    - name: ADMIN_CHAT_ID
+      secret: tweemage-admin-chat-id
+    - name: API_TOKEN
+      secret: tweemage-api-token
+    - name: PORT
+      value: 8080
+    - name: DOMAIN
+      secret: tweemage-domain
+    - name: ROUTING_ADDRESS
+      secret: tweemage-routing-address
+    - name: MONGODB_USERNAME
+      secret: tweemage-mongodb-username
+    - name: MONGODB_PASSWORD
+      secret: tweemage-mongodb-password
