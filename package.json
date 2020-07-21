@@ -1,0 +1,27 @@
+{
+  "name": "tweemage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "watch:css": "postcss ./tailwind.css -o src/css/main.css -w",
+    "build:css": "postcss ./tailwind.css -o src/css/main.css",
+    "go-live": "live-server --open=./src",
+    "start": "npm-run-all -p watch:css go-live",
+    "shot": "node src/shot.js",
+    "build": "NODE_ENV=production npm run build:css"
+  },
+  "author": "theMasix",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^5.2.1",
+    "tailwindcss": "^1.5.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.7.6",
+    "live-server": "^1.2.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^7.1.1",
+    "postcss-import": "^12.0.1"
+  }
+}

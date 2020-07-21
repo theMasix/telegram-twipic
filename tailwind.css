@@ -1,0 +1,20 @@
+@import './src/assets/fonts/fontiran.css';
+
+@import 'tailwindcss/base';
+
+@import 'tailwindcss/components';
+
+@import 'tailwindcss/utilities';
+
+body {
+  direction: rtl;
+}
+
+#tweemage-container {
+  width: 540px;
+  height: 960px;
+}
+
+.ltr {
+  direction: ltr;
+}
