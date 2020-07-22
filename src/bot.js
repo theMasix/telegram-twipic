@@ -4,10 +4,6 @@ const messages = require('./messages');
 // const utils = require('./utils');
 const Telegraf = require('telegraf');
 
-// const userActions = require('./database/userActions');
-
-const webhookURL = config.domain + config.routingAddress;
-
 const bot = new Telegraf(config.apiToken, {
   // If I delete the webhookReply: false then the first ctx reply in on('text') method would return something else than telegram message
   // For more information see:  https://github.com/telegraf/telegraf/issues/784
@@ -15,6 +11,12 @@ const bot = new Telegraf(config.apiToken, {
     webhookReply: false,
   },
 });
+
+// Set telegram webhook
+const webhookURL = config.domain + config.routingAddress;
+bot.telegram.setWebhook(webhookURL);
+console.log(`webhook has set to ${webhookURL}`);
+
 // Set the bot response
 bot.start(async (ctx) => {
   // let user = ctx.chat;
@@ -28,8 +30,6 @@ bot.on('text', async (ctx) => {
   // let userMessage = ctx.message.text;
   let lastMessage = null;
 
-  // let user = ctx.chat;
-
   try {
     // await userActions.insertNewMessage(user, userMessage);
 
@@ -39,32 +39,24 @@ bot.on('text', async (ctx) => {
     // let tweetInfo = await utils.getTweetInfo(trackLink);
 
     // Let's take screenshot
-    const imageName = '1.jpg';
-    takeShot.take(imageName);
-
-    const imageURL = `${config.domain}/download/${imageName}`;
-
-    lastMessage = await ctx.telegram.editMessageText(
-      lastMessage.chat.id,
-      lastMessage.message_id,
-      undefined,
-      'Enjoy! here is your image:'
-    );
+    const imageName = 'tweet.jpg';
+    await takeShot.take(imageName);
 
     // Send image to user
+    // config.domain has a / at its end
+    const imageURL = `${config.domain}download/${imageName}`;
+    console.log(`'${imageURL}'`);
     await ctx.replyWithPhoto(imageURL);
 
-    // update downloaded track count
-    // await userActions.updateDownloadedTrack(user);
+    lastMessage = await ctx.reply('screenshot taked');
   } catch (e) {
-    ctx.reply('an Error occured. Please contact @TheMasix');
+    ctx.reply(messages.onError);
     console.log(e.message);
-    ctx.telegram.sendMessage(config.adminChatID, JSON.stringify(e.message));
+    ctx.telegram.sendMessage(
+      config.adminChatID,
+      `Private Message: ${JSON.stringify(e.message)}`
+    );
   }
 });
-
-// Set telegram webhook
-bot.telegram.setWebhook(webhookURL);
-console.log(`webhook has set to ${webhookURL}`);
 
 module.exports = bot;

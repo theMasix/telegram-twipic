@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./src/page/index.html'],
+  purge: ['src/page/index.html'],
   target: 'relaxed',
   prefix: '',
   important: false,
@@ -237,7 +237,6 @@ module.exports = {
     fontFamily: {
       sans: [
         'Vazir',
-        'IRANYekan',
         'system-ui',
         '-apple-system',
         'BlinkMacSystemFont',

@@ -2,11 +2,11 @@ const config = require('./config');
 const fs = require('fs');
 const bot = require('./bot');
 const express = require('express');
-
 const app = express();
+
 app.get('/download/:filename', (req, res) => {
   let filename = req.params.filename;
-  const fileAddress = `/home/node/app/screenshots/${filename}`;
+  const fileAddress = `/home/node/app/src/screenshots/${filename}`;
   try {
     res.download(fileAddress, (err) => {
       if (err) {
