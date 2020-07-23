@@ -6,11 +6,12 @@
   "repository": "http://github.com/themasix/telegram-tweemage",
   "scripts": {
     "watch:css": "postcss ./tailwind.css -o ./src/page/css/main.css -w",
-    "build:css": "NODE_ENV=production postcss ./tailwind.css -o ./src/page/css/main.css",
+    "build:css": "postcss ./tailwind.css -o ./src/page/css/main.css",
     "go-live": "live-server --open=./src/page",
     "dev": "npm-run-all -p watch:css go-live",
     "start": "NODE_ENV=production npm run build:css && node src/server.js",
-    "shot": "node src/shot.js"
+    "shot": "node src/shot.js",
+    "deploy": "flyctl deploy --remote-only"
   },
   "author": "theMasix",
   "license": "ISC",

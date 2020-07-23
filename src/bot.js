@@ -39,7 +39,7 @@ bot.on('text', async (ctx) => {
     // let tweetInfo = await utils.getTweetInfo(trackLink);
 
     // Let's take screenshot
-    const imageName = 'tweet.jpg';
+    const imageName = `tweet${Math.ceil(Math.random() * 10000)}.jpg`;
     await takeShot.take(imageName);
 
     // Send image to user

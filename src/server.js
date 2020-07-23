@@ -23,6 +23,8 @@ app.get('/download/:filename', (req, res) => {
   }
 });
 
+app.use('/tweemage', express.static('src/page'));
+
 // Set the bot API endpoint
 app.use(bot.webhookCallback('/' + config.routingAddress));
 

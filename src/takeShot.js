@@ -16,10 +16,10 @@ takeShot.take = (imageName, deviceScaleFactor = 3) => {
         height: 960,
         deviceScaleFactor: deviceScaleFactor,
       });
-      await page.goto(url, {
-        // Wait until fully load
-        waitUntil: ['load'],
-      });
+      await page.goto(url);
+      // Waiting for fonts
+      await page.evaluateHandle('document.fonts.ready');
+      // await page.waitFor(1000);
 
       await page.screenshot({ path: imagePath });
       await browser.close();
