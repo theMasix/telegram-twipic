@@ -1,4 +1,4 @@
-FROM node:12-slim
+FROM node:12-slim as builder
 
 # Check more info:
 # https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#running-puppeteer-in-docker
@@ -25,12 +25,16 @@ RUN npm i puppeteer \
   && chown -R pptruser:pptruser /home/pptruser \
   && chown -R pptruser:pptruser /node_modules
 
+FROM builder as installer
+
 # This line should be after `npm i puppeteer ...`
 WORKDIR /home/node/app
 
 COPY package*.json ./
 
 RUN npm install
+
+FROM installer as deployer
 
 # Run everything after as non-privileged user.
 USER pptruser

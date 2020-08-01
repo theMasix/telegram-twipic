@@ -1,7 +1,7 @@
 kind: ExternalService
 name: telegram-tweemage
 spec:
-  image: telegram-tweemage:0.0.40
+  image: telegram-tweemage:0.0.42
   allow_http: false
   port: 8080
   env:

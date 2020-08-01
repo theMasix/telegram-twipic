@@ -1,11 +1,9 @@
 const puppeteer = require('puppeteer');
 
-const url = `file://${__dirname}/page/index.html`;
-
 const takeShot = {};
 
-takeShot.take = (imageName, deviceScaleFactor = 3) => {
-  const imagePath = `${__dirname}/screenshots/${imageName}`;
+takeShot.take = (imagePath, data = {}, deviceScaleFactor = 3) => {
+  const url = takeShot.prepareURL(data);
 
   return new Promise(async (res, rej) => {
     try {
@@ -17,9 +15,8 @@ takeShot.take = (imageName, deviceScaleFactor = 3) => {
         deviceScaleFactor: deviceScaleFactor,
       });
       await page.goto(url);
-      // Waiting for fonts
+      // Waiting for fonts to load
       await page.evaluateHandle('document.fonts.ready');
-      // await page.waitFor(1000);
 
       await page.screenshot({ path: imagePath });
       await browser.close();
@@ -31,6 +28,20 @@ takeShot.take = (imageName, deviceScaleFactor = 3) => {
       rej(e);
     }
   });
+};
+
+takeShot.prepareURL = (data) => {
+  let url = `file://${__dirname}/page/index.html`;
+
+  for (key of Object.keys(data)) {
+    const prefix = Object.keys(data).indexOf(key) == 0 ? '?' : '&';
+
+    if (key == 'body') data[key] = encodeURIComponent(data[key]);
+
+    url += `${prefix}${key}=${data[key]}`;
+  }
+  console.log(url);
+  return url;
 };
 
 module.exports = takeShot;
