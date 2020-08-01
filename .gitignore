@@ -3,3 +3,4 @@ node_modules
 .fandogh
 test.js
 screenshots/*
+src/libs/twipic/page/css/main.css
